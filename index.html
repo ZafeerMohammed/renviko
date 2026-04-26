@@ -1,0 +1,3184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Renviko Technologies Pvt Ltd</title>
+        <!-- G -->
+        <!-- A -->
+        <!-- Y -->
+        <!-- A -->
+        <!-- T -->
+        <!-- H -->
+        <!-- R -->
+        <!-- I -->
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --bg: #0b0f0e;
+                --surface: #111614;
+                --card: #161c1a;
+                --border: rgba(255, 255, 255, 0.07);
+                --accent: #3ddc97;
+                --accent2: #1a8c5e;
+                --text: #eae8e3;
+                --muted: #7a8a84;
+                --light: #c8d4cf;
+                --serif: "Playfair Display", Georgia, serif;
+                --sans: "Outfit", system-ui, sans-serif;
+            }
+
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font-family: var(--sans);
+                font-weight: 300;
+                overflow-x: hidden;
+                cursor: none;
+            }
+
+            /* ── CURSOR ── */
+            .cursor {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 9999;
+                pointer-events: none;
+            }
+
+            .cursor-dot {
+                width: 8px;
+                height: 8px;
+                background: var(--accent);
+                border-radius: 50%;
+                position: absolute;
+                transform: translate(-50%, -50%);
+            }
+
+            .cursor-ring {
+                width: 36px;
+                height: 36px;
+                border: 1px solid rgba(61, 220, 151, 0.4);
+                border-radius: 50%;
+                position: absolute;
+                transform: translate(-50%, -50%);
+                transition: all 0.18s ease;
+            }
+
+            body:has(a:hover) .cursor-ring,
+            body:has(button:hover) .cursor-ring {
+                width: 54px;
+                height: 54px;
+                background: rgba(61, 220, 151, 0.06);
+                border-color: var(--accent);
+            }
+
+            /* ── BG ── */
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                z-index: 0;
+                opacity: 0.04;
+                pointer-events: none;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            }
+
+            .bg-grid {
+                position: fixed;
+                inset: 0;
+                z-index: 0;
+                pointer-events: none;
+                background-image: linear-gradient(
+                        var(--border) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+                background-size: 60px 60px;
+                mask-image: radial-gradient(
+                    ellipse 80% 80% at 50% 50%,
+                    black 20%,
+                    transparent 100%
+                );
+                animation: gridPulse 8s ease-in-out infinite;
+            }
+
+            @keyframes gridPulse {
+                0%,
+                100% {
+                    opacity: 0.4;
+                }
+
+                50% {
+                    opacity: 0.7;
+                }
+            }
+
+            .orb {
+                position: fixed;
+                border-radius: 50%;
+                filter: blur(80px);
+                pointer-events: none;
+                z-index: 0;
+                animation: orbFloat 12s ease-in-out infinite;
+            }
+
+            .orb1 {
+                width: 500px;
+                height: 500px;
+                top: -150px;
+                right: -100px;
+                background: radial-gradient(
+                    circle,
+                    rgba(61, 220, 151, 0.12) 0%,
+                    transparent 70%
+                );
+            }
+
+            .orb2 {
+                width: 400px;
+                height: 400px;
+                bottom: 20%;
+                left: -100px;
+                background: radial-gradient(
+                    circle,
+                    rgba(26, 140, 94, 0.1) 0%,
+                    transparent 70%
+                );
+                animation-delay: -4s;
+            }
+
+            .orb3 {
+                width: 300px;
+                height: 300px;
+                top: 40%;
+                right: 10%;
+                background: radial-gradient(
+                    circle,
+                    rgba(61, 220, 151, 0.07) 0%,
+                    transparent 70%
+                );
+                animation-delay: -8s;
+            }
+
+            @keyframes orbFloat {
+                0%,
+                100% {
+                    transform: translate(0, 0) scale(1);
+                }
+
+                33% {
+                    transform: translate(20px, -30px) scale(1.05);
+                }
+
+                66% {
+                    transform: translate(-10px, 20px) scale(0.97);
+                }
+            }
+
+            /* ── NAV ── */
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 100;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1.2rem 5vw;
+                background: rgba(11, 15, 14, 0.75);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--border);
+                animation: slideDown 0.7s 0.2s cubic-bezier(0.16, 1, 0.3, 1)
+                    both;
+            }
+
+            @keyframes slideDown {
+                from {
+                    transform: translateY(-100%);
+                }
+
+                to {
+                    transform: translateY(0);
+                }
+            }
+
+            .logo {
+                font-family: var(--serif);
+                font-size: 1.45rem;
+                font-weight: 700;
+                color: var(--text);
+                text-decoration: none;
+                position: relative;
+            }
+
+            .logo span {
+                color: var(--accent);
+            }
+
+            .logo::after {
+                content: "";
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: var(--accent);
+                transform: scaleX(0);
+                transition: transform 0.3s;
+                transform-origin: left;
+            }
+
+            .logo:hover::after {
+                transform: scaleX(1);
+            }
+
+            nav ul {
+                list-style: none;
+                display: flex;
+                gap: 2rem;
+                align-items: center;
+            }
+
+            nav ul a {
+                text-decoration: none;
+                color: var(--muted);
+                font-size: 0.78rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                transition: color 0.2s;
+                position: relative;
+            }
+
+            nav ul a::after {
+                content: "";
+                position: absolute;
+                bottom: -3px;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: var(--accent);
+                transform: scaleX(0);
+                transition: transform 0.25s;
+                transform-origin: left;
+            }
+
+            nav ul a:hover {
+                color: var(--text);
+            }
+
+            nav ul a:hover::after {
+                transform: scaleX(1);
+            }
+
+            .nav-cta {
+                background: var(--accent) !important;
+                color: var(--bg) !important;
+                padding: 0.5rem 1.3rem;
+                font-weight: 500 !important;
+            }
+
+            .nav-cta::after {
+                display: none !important;
+            }
+
+            .nav-cta:hover {
+                box-shadow: 0 0 20px rgba(61, 220, 151, 0.4) !important;
+            }
+
+            .nav-hamburger {
+                display: none;
+                flex-direction: column;
+                gap: 5px;
+                background: none;
+                border: none;
+                cursor: none;
+                padding: 4px;
+            }
+
+            .nav-hamburger span {
+                display: block;
+                width: 22px;
+                height: 1.5px;
+                background: var(--text);
+                transition: all 0.3s;
+            }
+
+            .mobile-menu {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(11, 15, 14, 0.97);
+                backdrop-filter: blur(20px);
+                z-index: 99;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2.5rem;
+            }
+
+            .mobile-menu.open {
+                display: flex;
+            }
+
+            .mobile-menu a {
+                text-decoration: none;
+                color: var(--text);
+                font-family: var(--serif);
+                font-size: 2rem;
+                font-weight: 400;
+                transition: color 0.2s;
+            }
+
+            .mobile-menu a:hover {
+                color: var(--accent);
+            }
+
+            .mobile-menu-close {
+                position: absolute;
+                top: 1.5rem;
+                right: 5vw;
+                background: none;
+                border: none;
+                cursor: none;
+                color: var(--muted);
+                font-size: 1.5rem;
+            }
+
+            /* ── HERO ── */
+            .hero {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                padding: 9rem 5vw 5rem;
+                position: relative;
+                z-index: 1;
+            }
+
+            .hero-inner {
+                max-width: 900px;
+            }
+
+            .hero-tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.7rem;
+                border: 1px solid rgba(61, 220, 151, 0.3);
+                background: rgba(61, 220, 151, 0.05);
+                padding: 0.4rem 1rem;
+                margin-bottom: 2.5rem;
+                font-size: 0.72rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--accent);
+                animation: fadeUp 0.8s 0.5s both;
+            }
+
+            .tag-dot {
+                width: 6px;
+                height: 6px;
+                background: var(--accent);
+                border-radius: 50%;
+                animation: blink 2s ease-in-out infinite;
+            }
+
+            @keyframes blink {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+
+                50% {
+                    opacity: 0.2;
+                }
+            }
+
+            h1 {
+                font-family: var(--serif);
+                font-size: clamp(3rem, 6vw, 6.5rem);
+                font-weight: 400;
+                line-height: 1.22;
+                letter-spacing: -0.02em;
+                margin-bottom: 1.8rem;
+            }
+
+            .hero-line {
+                overflow: hidden;
+                padding-bottom: 0.2em;
+            }
+
+            .hero-line span {
+                display: block;
+                animation: lineUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+            }
+
+            .hero-line:nth-child(1) span {
+                animation-delay: 0.45s;
+            }
+
+            .hero-line:nth-child(2) span {
+                animation-delay: 0.6s;
+            }
+
+            .hero-line:nth-child(3) span {
+                animation-delay: 0.75s;
+            }
+
+            @keyframes lineUp {
+                from {
+                    transform: translateY(110%);
+                }
+
+                to {
+                    transform: translateY(0);
+                }
+            }
+
+            h1 em {
+                font-style: italic;
+                color: var(--accent);
+            }
+
+            .hero-sub {
+                font-size: 1.05rem;
+                color: var(--muted);
+                line-height: 1.8;
+                max-width: 520px;
+                margin-bottom: 3rem;
+                animation: fadeUp 0.8s 1s both;
+            }
+
+            .hero-actions {
+                display: flex;
+                gap: 1.2rem;
+                align-items: center;
+                flex-wrap: wrap;
+                animation: fadeUp 0.8s 1.2s both;
+            }
+
+            .scroll-hint {
+                position: absolute;
+                bottom: 2.5rem;
+                left: 5vw;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                font-size: 0.72rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                color: var(--muted);
+                animation: fadeIn 1s 2s both;
+            }
+
+            .scroll-line {
+                width: 40px;
+                height: 1px;
+                background: var(--muted);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .scroll-line::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: var(--accent);
+                transform: translateX(-100%);
+                animation: scanLine 2s 2.5s ease-in-out infinite;
+            }
+
+            @keyframes scanLine {
+                0% {
+                    transform: translateX(-100%);
+                }
+
+                50% {
+                    transform: translateX(0);
+                }
+
+                100% {
+                    transform: translateX(100%);
+                }
+            }
+
+            /* ── BUTTONS ── */
+            .btn-primary {
+                background: var(--accent);
+                color: var(--bg);
+                padding: 0.9rem 2.2rem;
+                border: none;
+                font-family: var(--sans);
+                font-size: 0.85rem;
+                font-weight: 500;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                cursor: none;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.6rem;
+                transition: box-shadow 0.3s, transform 0.2s;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .btn-primary::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: rgba(255, 255, 255, 0.15);
+                transform: translateX(-100%) skewX(-15deg);
+                transition: transform 0.5s;
+            }
+
+            .btn-primary:hover::before {
+                transform: translateX(120%) skewX(-15deg);
+            }
+
+            .btn-primary:hover {
+                box-shadow: 0 0 30px rgba(61, 220, 151, 0.4);
+                transform: translateY(-2px);
+            }
+
+            .btn-ghost {
+                color: var(--light);
+                text-decoration: none;
+                font-size: 0.85rem;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.9rem 0;
+                border-bottom: 1px solid var(--border);
+                transition: color 0.2s, border-color 0.2s, gap 0.2s;
+            }
+
+            .btn-ghost:hover {
+                color: var(--accent);
+                border-color: var(--accent);
+                gap: 0.9rem;
+            }
+
+            .btn-outline {
+                background: transparent;
+                color: var(--accent);
+                border: 1px solid var(--accent);
+                padding: 0.75rem 1.8rem;
+                font-family: var(--sans);
+                font-size: 0.82rem;
+                font-weight: 500;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                cursor: none;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            }
+
+            .btn-outline:hover {
+                background: var(--accent);
+                color: var(--bg);
+                box-shadow: 0 0 20px rgba(61, 220, 151, 0.3);
+            }
+
+            /* ── STATS ── */
+            .stats-bar {
+                position: relative;
+                z-index: 1;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                border-top: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+                background: var(--surface);
+            }
+
+            .stat {
+                padding: 3rem 2rem;
+                border-right: 1px solid var(--border);
+                position: relative;
+                overflow: hidden;
+                transition: background 0.3s;
+            }
+
+            .stat:last-child {
+                border-right: none;
+            }
+
+            .stat::before {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: var(--accent);
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.4s;
+            }
+
+            .stat:hover {
+                background: rgba(61, 220, 151, 0.03);
+            }
+
+            .stat:hover::before {
+                transform: scaleX(1);
+            }
+
+            .stat-num {
+                font-family: var(--serif);
+                font-size: 3.2rem;
+                font-weight: 700;
+                color: var(--accent);
+                line-height: 1;
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-label {
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--muted);
+            }
+
+            /* ── SECTIONS ── */
+            section {
+                padding: 8rem 5vw;
+                position: relative;
+                z-index: 1;
+            }
+
+            .section-label {
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                font-size: 0.72rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 1.2rem;
+            }
+
+            .section-label::before {
+                content: "";
+                width: 28px;
+                height: 1px;
+                background: var(--accent);
+            }
+
+            h2 {
+                font-family: var(--serif);
+                font-size: clamp(2rem, 3.5vw, 3.5rem);
+                font-weight: 400;
+                line-height: 1.15;
+                letter-spacing: -0.01em;
+            }
+
+            h2 em {
+                font-style: italic;
+                color: var(--accent);
+            }
+
+            /* ── SERVICES ── */
+            .services-header {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+                align-items: end;
+                margin-bottom: 4rem;
+            }
+
+            .services-desc {
+                color: var(--muted);
+                line-height: 1.75;
+                font-size: 0.95rem;
+                margin-top: 1rem;
+            }
+
+            .svc-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1px;
+                background: var(--border);
+            }
+
+            .svc-card {
+                background: var(--card);
+                padding: 2.8rem 2.2rem;
+                position: relative;
+                overflow: hidden;
+                transition: background 0.4s;
+                cursor: none;
+            }
+
+            .svc-card::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    135deg,
+                    rgba(61, 220, 151, 0.07) 0%,
+                    transparent 60%
+                );
+                opacity: 0;
+                transition: opacity 0.4s;
+            }
+
+            .svc-card:hover {
+                background: #1a2420;
+            }
+
+            .svc-card:hover::before {
+                opacity: 1;
+            }
+
+            .svc-card::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background: var(--accent);
+                transform: scaleY(0);
+                transform-origin: bottom;
+                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .svc-card:hover::after {
+                transform: scaleY(1);
+            }
+
+            .svc-index {
+                font-family: var(--serif);
+                font-size: 3rem;
+                color: rgba(61, 220, 151, 0.12);
+                line-height: 1;
+                margin-bottom: 1.5rem;
+                transition: color 0.3s;
+            }
+
+            .svc-card:hover .svc-index {
+                color: rgba(61, 220, 151, 0.25);
+            }
+
+            .svc-title {
+                font-family: var(--serif);
+                font-size: 1.25rem;
+                font-weight: 400;
+                margin-bottom: 0.9rem;
+                transition: color 0.3s;
+            }
+
+            .svc-card:hover .svc-title {
+                color: var(--accent);
+            }
+
+            .svc-desc {
+                font-size: 0.85rem;
+                color: var(--muted);
+                line-height: 1.75;
+            }
+
+            .svc-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.75rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-top: 1.5rem;
+                background: none;
+                border: none;
+                cursor: none;
+                font-family: var(--sans);
+                padding: 0;
+                opacity: 0;
+                transform: translateX(-10px);
+                transition: opacity 0.3s, transform 0.3s, gap 0.2s;
+            }
+
+            .svc-card:hover .svc-btn {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .svc-btn:hover {
+                gap: 0.9rem;
+            }
+
+            /* ── MODAL ── */
+            .modal-overlay {
+                position: fixed;
+                inset: 0;
+                z-index: 500;
+                background: rgba(0, 0, 0, 0.75);
+                backdrop-filter: blur(10px);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.35s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+            }
+
+            .modal-overlay.open {
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .modal {
+                background: var(--card);
+                border: 1px solid rgba(61, 220, 151, 0.15);
+                max-width: 800px;
+                width: 100%;
+                max-height: 88vh;
+                overflow-y: auto;
+                position: relative;
+                transform: translateY(40px) scale(0.96);
+                transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .modal-overlay.open .modal {
+                transform: translateY(0) scale(1);
+            }
+
+            .modal::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .modal::-webkit-scrollbar-thumb {
+                background: var(--accent2);
+            }
+
+            .modal-header {
+                padding: 3rem 3rem 2rem;
+                border-bottom: 1px solid var(--border);
+                position: sticky;
+                top: 0;
+                z-index: 1;
+                background: linear-gradient(
+                    135deg,
+                    #1a2420 0%,
+                    var(--card) 100%
+                );
+            }
+
+            .modal-index {
+                font-size: 0.72rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 0.6rem;
+            }
+
+            .modal-title {
+                font-family: var(--serif);
+                font-size: 2.2rem;
+                font-weight: 400;
+                color: var(--text);
+            }
+
+            .modal-close {
+                position: absolute;
+                top: 1.8rem;
+                right: 1.8rem;
+                background: none;
+                border: 1px solid var(--border);
+                width: 38px;
+                height: 38px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: none;
+                color: var(--muted);
+                font-size: 1rem;
+                transition: border-color 0.2s, color 0.2s, background 0.2s;
+            }
+
+            .modal-close:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+                background: rgba(61, 220, 151, 0.08);
+            }
+
+            .modal-body {
+                padding: 2.5rem 3rem 3rem;
+            }
+
+            .modal-intro {
+                font-size: 1rem;
+                color: var(--light);
+                line-height: 1.85;
+                margin-bottom: 2.5rem;
+                border-left: 2px solid var(--accent);
+                padding-left: 1.2rem;
+            }
+
+            .modal-features-title {
+                font-size: 0.72rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-bottom: 1.2rem;
+            }
+
+            .modal-features {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1px;
+                background: var(--border);
+                margin-bottom: 2.5rem;
+            }
+
+            .modal-feature {
+                background: var(--surface);
+                padding: 1.6rem;
+                transition: background 0.3s;
+            }
+
+            .modal-feature:hover {
+                background: #1a2420;
+            }
+
+            .modal-feature-title {
+                font-size: 0.78rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--accent);
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+            }
+
+            .modal-feature-desc {
+                font-size: 0.83rem;
+                color: var(--muted);
+                line-height: 1.65;
+            }
+
+            .modal-cta {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                padding-top: 1rem;
+                border-top: 1px solid var(--border);
+            }
+
+            /* ── PROCESS ── */
+            .process-section {
+                background: var(--surface);
+            }
+
+            .process-track {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                position: relative;
+                margin-top: 4rem;
+            }
+
+            .process-track::before {
+                content: "";
+                position: absolute;
+                top: 28px;
+                left: 10%;
+                right: 10%;
+                height: 1px;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--accent),
+                    transparent
+                );
+                z-index: 0;
+            }
+
+            .process-step {
+                text-align: center;
+                position: relative;
+                z-index: 1;
+                padding: 0 1rem;
+            }
+
+            .process-num {
+                width: 56px;
+                height: 56px;
+                border: 1px solid var(--accent);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1.5rem;
+                font-family: var(--serif);
+                font-size: 1.1rem;
+                color: var(--accent);
+                background: var(--surface);
+                transition: background 0.3s, box-shadow 0.3s;
+            }
+
+            .process-step:hover .process-num {
+                background: rgba(61, 220, 151, 0.1);
+                box-shadow: 0 0 20px rgba(61, 220, 151, 0.2);
+            }
+
+            .process-title {
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--light);
+                margin-bottom: 0.6rem;
+                font-weight: 500;
+            }
+
+            .process-desc {
+                font-size: 0.78rem;
+                color: var(--muted);
+                line-height: 1.65;
+            }
+
+            /* ── INDUSTRIES ── */
+            .industries-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1px;
+                background: var(--border);
+                margin-top: 4rem;
+            }
+
+            .industry-card {
+                background: var(--card);
+                padding: 2rem 1.8rem;
+                position: relative;
+                overflow: hidden;
+                transition: background 0.3s;
+            }
+
+            .industry-card::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: var(--accent);
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.4s;
+            }
+
+            .industry-card:hover {
+                background: #1a2420;
+            }
+
+            .industry-card:hover::after {
+                transform: scaleX(1);
+            }
+
+            .industry-icon {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                display: block;
+            }
+
+            .industry-name {
+                font-family: var(--serif);
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .industry-desc {
+                font-size: 0.8rem;
+                color: var(--muted);
+                line-height: 1.65;
+            }
+
+            /* ── TESTIMONIALS ── */
+            .testi-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1px;
+                background: var(--border);
+                margin-top: 4rem;
+            }
+
+            .testi-card {
+                background: var(--card);
+                padding: 2.5rem 2rem;
+                transition: background 0.3s;
+            }
+
+            .testi-card:hover {
+                background: #1a2420;
+            }
+
+            .testi-stars {
+                color: var(--accent);
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            .testi-quote {
+                font-family: var(--serif);
+                font-size: 1rem;
+                font-style: italic;
+                color: var(--light);
+                line-height: 1.7;
+                margin-bottom: 1.8rem;
+                position: relative;
+                padding-top: 1.5rem;
+            }
+
+            .testi-quote::before {
+                content: "\201C";
+                position: absolute;
+                top: -0.5rem;
+                left: 0;
+                font-size: 3rem;
+                color: var(--accent);
+                font-family: var(--serif);
+                line-height: 1;
+                opacity: 0.4;
+            }
+
+            .testi-author {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .testi-avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: linear-gradient(
+                    135deg,
+                    var(--accent2),
+                    var(--accent)
+                );
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 600;
+                font-size: 0.85rem;
+                color: var(--bg);
+                flex-shrink: 0;
+            }
+
+            .testi-name {
+                font-size: 0.85rem;
+                color: var(--text);
+                font-weight: 500;
+            }
+
+            .testi-role {
+                font-size: 0.75rem;
+                color: var(--muted);
+            }
+
+            /* ── WHY ── */
+            .why-section {
+                background: var(--surface);
+            }
+
+            .why-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 5rem;
+                align-items: center;
+            }
+
+            .why-right {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2px;
+                background: var(--border);
+            }
+
+            .pillar {
+                background: var(--card);
+                padding: 2.5rem 2rem;
+                position: relative;
+                overflow: hidden;
+                transition: background 0.3s;
+            }
+
+            .pillar:hover {
+                background: #1a2420;
+            }
+
+            .pillar-glyph {
+                font-size: 1.6rem;
+                margin-bottom: 1.2rem;
+                filter: grayscale(1) opacity(0.4);
+                transition: filter 0.3s;
+            }
+
+            .pillar:hover .pillar-glyph {
+                filter: none;
+            }
+
+            .pillar-title {
+                font-size: 0.82rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--light);
+                margin-bottom: 0.7rem;
+                font-weight: 500;
+            }
+
+            .pillar-desc {
+                font-size: 0.82rem;
+                color: var(--muted);
+                line-height: 1.7;
+            }
+
+            .pillar-bar {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: var(--accent);
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .pillar:hover .pillar-bar {
+                transform: scaleX(1);
+            }
+
+            .why-statement {
+                font-family: var(--serif);
+                font-size: 1.6rem;
+                font-weight: 400;
+                line-height: 1.45;
+                color: var(--light);
+                margin: 2rem 0;
+            }
+
+            .why-statement em {
+                font-style: italic;
+                color: var(--accent);
+            }
+
+            /* ── TEAM ── */
+            .team-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1px;
+                background: var(--border);
+                margin-top: 4rem;
+            }
+
+            .team-card {
+                background: var(--card);
+                padding: 2rem 1.8rem;
+                text-align: center;
+                transition: background 0.3s;
+            }
+
+            .team-card:hover {
+                background: #1a2420;
+            }
+
+            .team-avatar {
+                width: 72px;
+                height: 72px;
+                border-radius: 50%;
+                margin: 0 auto 1.2rem;
+                border: 2px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: var(--serif);
+                font-size: 1.5rem;
+                color: var(--accent);
+                background: rgba(61, 220, 151, 0.07);
+                transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+            .team-card:hover .team-avatar {
+                border-color: var(--accent);
+                box-shadow: 0 0 16px rgba(61, 220, 151, 0.2);
+            }
+
+            .team-name {
+                font-family: var(--serif);
+                font-size: 1.05rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .team-role {
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--accent);
+                margin-bottom: 0.7rem;
+            }
+
+            .team-bio {
+                font-size: 0.8rem;
+                color: var(--muted);
+                line-height: 1.65;
+            }
+
+            /* ── FAQ ── */
+            .faq-section {
+                background: var(--surface);
+            }
+
+            .faq-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+                margin-top: 4rem;
+            }
+
+            .faq-item {
+                border-bottom: 1px solid var(--border);
+            }
+
+            .faq-q {
+                font-size: 0.95rem;
+                color: var(--light);
+                cursor: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1.2rem 0;
+                font-weight: 400;
+                transition: color 0.2s;
+            }
+
+            .faq-q:hover {
+                color: var(--accent);
+            }
+
+            .faq-icon {
+                width: 24px;
+                height: 24px;
+                border: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.9rem;
+                color: var(--muted);
+                transition: all 0.3s;
+                flex-shrink: 0;
+                margin-left: 1rem;
+            }
+
+            .faq-item.open .faq-icon {
+                border-color: var(--accent);
+                color: var(--accent);
+                transform: rotate(45deg);
+            }
+
+            .faq-a {
+                font-size: 0.85rem;
+                color: var(--muted);
+                line-height: 1.75;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease, padding 0.3s;
+            }
+
+            .faq-item.open .faq-a {
+                max-height: 250px;
+                padding-bottom: 1.2rem;
+            }
+
+            /* ── CTA BAND ── */
+            .cta-band {
+                padding: 7rem 5vw;
+                text-align: center;
+                position: relative;
+                z-index: 1;
+                overflow: hidden;
+                background: linear-gradient(135deg, #0f1f1a 0%, var(--bg) 100%);
+                border-top: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .cta-band::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 700px;
+                height: 400px;
+                background: radial-gradient(
+                    ellipse,
+                    rgba(61, 220, 151, 0.08) 0%,
+                    transparent 70%
+                );
+                pointer-events: none;
+            }
+
+            .cta-band h2 {
+                margin-bottom: 1.2rem;
+            }
+
+            .cta-band p {
+                color: var(--muted);
+                max-width: 500px;
+                margin: 0 auto 2.5rem;
+                line-height: 1.75;
+            }
+
+            .cta-band-actions {
+                display: flex;
+                gap: 1.2rem;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            /* ── CONTACT ── */
+            .contact-grid {
+                display: grid;
+                grid-template-columns: 1fr 1.2fr;
+                gap: 6rem;
+                align-items: start;
+            }
+
+            .contact-form {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .field-group label {
+                display: block;
+                font-size: 0.7rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-bottom: 0.5rem;
+            }
+
+            input,
+            select,
+            textarea {
+                width: 100%;
+                background: var(--card);
+                border: 1px solid var(--border);
+                padding: 0.9rem 1.1rem;
+                font-family: var(--sans);
+                font-size: 0.875rem;
+                color: var(--text);
+                outline: none;
+                transition: border-color 0.3s, box-shadow 0.3s;
+                resize: none;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: var(--muted);
+            }
+
+            input:focus,
+            select:focus,
+            textarea:focus {
+                border-color: var(--accent);
+                box-shadow: 0 0 0 3px rgba(61, 220, 151, 0.08);
+            }
+
+            select {
+                appearance: none;
+                cursor: none;
+                color: var(--muted);
+            }
+
+            select option {
+                background: var(--card);
+            }
+
+            .contact-info {
+                padding-top: 1rem;
+            }
+
+            .cinfo-item {
+                padding: 1.8rem 0;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                gap: 2rem;
+                align-items: flex-start;
+            }
+
+            .cinfo-icon {
+                width: 36px;
+                height: 36px;
+                border: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.9rem;
+                color: var(--accent);
+                flex-shrink: 0;
+                transition: background 0.3s, border-color 0.3s;
+            }
+
+            .cinfo-item:hover .cinfo-icon {
+                background: rgba(61, 220, 151, 0.1);
+                border-color: var(--accent);
+            }
+
+            .cinfo-label {
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                color: var(--muted);
+                margin-bottom: 0.3rem;
+            }
+
+            .cinfo-value {
+                font-family: var(--serif);
+                font-size: 1.1rem;
+                color: var(--text);
+            }
+
+            /* ── FOOTER ── */
+            footer {
+                background: #080c0b;
+                padding: 4rem 5vw 2rem;
+                border-top: 1px solid var(--border);
+                position: relative;
+                z-index: 1;
+            }
+
+            .footer-top {
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr 1fr;
+                gap: 3rem;
+                padding-bottom: 3rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .footer-brand-logo {
+                font-family: var(--serif);
+                font-size: 1.3rem;
+                color: var(--text);
+                margin-bottom: 1rem;
+            }
+
+            .footer-brand-logo span {
+                color: var(--accent);
+            }
+
+            .footer-tagline {
+                font-size: 0.85rem;
+                color: var(--muted);
+                line-height: 1.7;
+                max-width: 240px;
+            }
+
+            .footer-col-title {
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.15em;
+                color: var(--accent);
+                margin-bottom: 1.2rem;
+            }
+
+            .footer-links-list {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 0.7rem;
+            }
+
+            .footer-links-list a {
+                text-decoration: none;
+                color: var(--muted);
+                font-size: 0.82rem;
+                transition: color 0.2s;
+            }
+
+            .footer-links-list a:hover {
+                color: var(--text);
+            }
+
+            .footer-bottom {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-top: 2rem;
+            }
+
+            .footer-copy {
+                font-size: 0.75rem;
+                color: var(--muted);
+            }
+
+            .footer-bottom-links {
+                display: flex;
+                gap: 2rem;
+            }
+
+            .footer-bottom-links a {
+                text-decoration: none;
+                color: var(--muted);
+                font-size: 0.75rem;
+                transition: color 0.2s;
+            }
+
+            .footer-bottom-links a:hover {
+                color: var(--accent);
+            }
+
+            /* ── SCROLL REVEAL ── */
+            .sr {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .sr.visible {
+                opacity: 1;
+                transform: none;
+            }
+
+            .sr-d1 {
+                transition-delay: 0.08s;
+            }
+
+            .sr-d2 {
+                transition-delay: 0.16s;
+            }
+
+            .sr-d3 {
+                transition-delay: 0.24s;
+            }
+
+            .sr-d4 {
+                transition-delay: 0.32s;
+            }
+
+            .sr-d5 {
+                transition-delay: 0.4s;
+            }
+
+            .sr-d6 {
+                transition-delay: 0.48s;
+            }
+
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* ── RESPONSIVE ── */
+            @media (max-width: 1100px) {
+                .footer-top {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+
+            @media (max-width: 900px) {
+                .services-header,
+                .why-grid,
+                .contact-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .svc-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .stats-bar {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .stat {
+                    border-right: none;
+                    border-bottom: 1px solid var(--border);
+                }
+
+                nav ul {
+                    display: none;
+                }
+
+                .nav-hamburger {
+                    display: flex;
+                }
+
+                .bg-grid {
+                    display: none;
+                }
+
+                .process-track {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 2rem;
+                }
+
+                .process-track::before {
+                    display: none;
+                }
+
+                .industries-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .testi-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .team-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .faq-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .cta-band-actions {
+                    flex-direction: column;
+                }
+
+                .footer-top {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .footer-bottom {
+                    flex-direction: column;
+                    gap: 1rem;
+                    text-align: center;
+                }
+            }
+
+            @media (max-width: 560px) {
+                .svc-grid,
+                .industries-grid,
+                .team-grid,
+                .why-right {
+                    grid-template-columns: 1fr;
+                }
+
+                .form-row,
+                .modal-features {
+                    grid-template-columns: 1fr;
+                }
+
+                .modal-body {
+                    padding: 2rem 1.5rem 2.5rem;
+                }
+
+                .modal-header {
+                    padding: 2rem 1.5rem 1.5rem;
+                }
+
+                .process-track {
+                    grid-template-columns: 1fr;
+                }
+
+                .hero-actions {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="cursor">
+            <div class="cursor-ring"></div>
+            <div class="cursor-dot"></div>
+        </div>
+        <div class="bg-grid"></div>
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        <!-- NAV -->
+        <nav>
+            <a href="#" class="logo"> Ren<span>viko</span> </a>
+            <ul>
+                <li>
+                    <a href="#services">Services</a>
+                </li>
+                <li>
+                    <a href="#process">Process</a>
+                </li>
+                <li>
+                    <a href="#industries">Industries</a>
+                </li>
+                <li>
+                    <a href="#about">About</a>
+                </li>
+                <li>
+                    <a href="#faq">FAQ</a>
+                </li>
+                <li>
+                    <a href="#contact" class="nav-cta">Get in Touch</a>
+                </li>
+            </ul>
+            <button
+                class="nav-hamburger"
+                onclick="document.getElementById('mobileMenu').classList.add('open')"
+                aria-label="Menu"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+        <!-- MOBILE MENU -->
+        <div class="mobile-menu" id="mobileMenu">
+            <button
+                class="mobile-menu-close"
+                onclick="document.getElementById('mobileMenu').classList.remove('open')"
+            >
+                ✕
+            </button>
+            <a
+                href="#services"
+                onclick="document.getElementById('mobileMenu').classList.remove('open')"
+                >Services</a
+            >
+            <a
+                href="#process"
+                onclick="document.getElementById('mobileMenu').classList.remove('open')"
+                >Process</a
+            >
+            <a
+                href="#industries"
+                onclick="document.getElementById('mobileMenu').classList.remove('open')"
+                >Industries</a
+            >
+            <a
+                href="#about"
+                onclick="document.getElementById('mobileMenu').classList.remove('open')"
+                >About</a
+            >
+            <a
+                href="#faq"
+                onclick="document.getElementById('mobileMenu').classList.remove('open')"
+                >FAQ</a
+            >
+            <a
+                href="#contact"
+                onclick="document.getElementById('mobileMenu').classList.remove('open')"
+                style="color: var(--accent)"
+                >Get in Touch</a
+            >
+        </div>
+        <!-- HERO -->
+        <div class="hero">
+            <div class="hero-inner">
+                <div class="hero-tag">
+                    <span class="tag-dot"></span>
+                    Back-Office Solutions Redefined
+                </div>
+                <h1>
+                    <div class="hero-line">
+                        <span>Powering the</span>
+                    </div>
+                    <div class="hero-line">
+                        <span>
+                            <em>backbone</em>
+                            of your
+                        </span>
+                    </div>
+                    <div class="hero-line">
+                        <span>business.</span>
+                    </div>
+                </h1>
+                <p class="hero-sub">
+                    Renviko Technologies delivers end-to-end back-office
+                    excellence — cloud, consulting, logistics, SCM, outsourcing,
+                    and accounts — all under one roof.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn-primary"
+                        >Start a conversation →</a
+                    >
+                    <a href="#services" class="btn-ghost">Explore services ↓</a>
+                </div>
+            </div>
+            <div class="scroll-hint">
+                <div class="scroll-line"></div>
+                Scroll to explore
+            </div>
+        </div>
+        <!-- STATS -->
+        <div class="stats-bar">
+            <div class="stat sr">
+                <div class="stat-num">
+                    <span class="count" data-target="125">0</span>
+                    +
+                </div>
+                <div class="stat-label">Clients Served</div>
+            </div>
+            <div class="stat sr sr-d1">
+                <div class="stat-num">
+                    <span class="count" data-target="8">0</span>
+                    +
+                </div>
+                <div class="stat-label">Years of Experience</div>
+            </div>
+            <div class="stat sr sr-d2">
+                <div class="stat-num">
+                    <span class="count" data-target="98">0</span>
+                    %
+                </div>
+                <div class="stat-label">Client Retention</div>
+            </div>
+            <div class="stat sr sr-d3">
+                <div class="stat-num">
+                    <span class="count" data-target="6">0</span>
+                </div>
+                <div class="stat-label">Service Verticals</div>
+            </div>
+        </div>
+        <!-- SERVICES -->
+        <section id="services">
+            <div class="services-header">
+                <div class="sr">
+                    <div class="section-label">What we do</div>
+                    <h2>
+                        Six pillars of <em>operational</em>
+                        excellence
+                    </h2>
+                </div>
+                <p class="services-desc sr sr-d2">
+                    We handle the complexity behind the scenes so your business
+                    runs smoothly and scales with confidence. One partner, every
+                    back-office need.
+                </p>
+            </div>
+            <div class="svc-grid">
+                <div class="svc-card sr sr-d1">
+                    <div class="svc-index">01</div>
+                    <div class="svc-title">Cloud Solutions</div>
+                    <p class="svc-desc">
+                        Scalable cloud infrastructure, migration, and managed
+                        services tailored to your growth trajectory and security
+                        requirements.
+                    </p>
+                    <button class="svc-btn" onclick="openModal('cloud')">
+                        Learn more →
+                    </button>
+                </div>
+                <div class="svc-card sr sr-d2">
+                    <div class="svc-index">02</div>
+                    <div class="svc-title">Outsourcing</div>
+                    <p class="svc-desc">
+                        Reliable, cost-efficient outsourcing of non-core
+                        functions, freeing your team to focus on what matters
+                        most.
+                    </p>
+                    <button class="svc-btn" onclick="openModal('outsourcing')">
+                        Learn more →
+                    </button>
+                </div>
+                <div class="svc-card sr sr-d3">
+                    <div class="svc-index">03</div>
+                    <div class="svc-title">Consulting</div>
+                    <p class="svc-desc">
+                        Strategic advisory across process optimisation, digital
+                        transformation, and operational efficiency for modern
+                        enterprises.
+                    </p>
+                    <button class="svc-btn" onclick="openModal('consulting')">
+                        Learn more →
+                    </button>
+                </div>
+                <div class="svc-card sr sr-d4">
+                    <div class="svc-index">04</div>
+                    <div class="svc-title">Logistics</div>
+                    <p class="svc-desc">
+                        End-to-end logistics coordination, warehousing
+                        management, and real-time delivery tracking and
+                        reporting.
+                    </p>
+                    <button class="svc-btn" onclick="openModal('logistics')">
+                        Learn more →
+                    </button>
+                </div>
+                <div class="svc-card sr sr-d5">
+                    <div class="svc-index">05</div>
+                    <div class="svc-title">Supply Chain Management</div>
+                    <p class="svc-desc">
+                        Streamlined SCM that reduces costs, improves visibility,
+                        and builds stronger supplier and vendor relationships.
+                    </p>
+                    <button class="svc-btn" onclick="openModal('scm')">
+                        Learn more →
+                    </button>
+                </div>
+                <div class="svc-card sr sr-d6">
+                    <div class="svc-index">06</div>
+                    <div class="svc-title">Accounts &amp;Finance</div>
+                    <p class="svc-desc">
+                        Accurate, timely accounting, payroll, invoicing, and
+                        financial reporting managed by experienced
+                        professionals.
+                    </p>
+                    <button class="svc-btn" onclick="openModal('accounts')">
+                        Learn more →
+                    </button>
+                </div>
+            </div>
+        </section>
+        <!-- PROCESS -->
+        <section id="process" class="process-section">
+            <div class="sr" style="text-align: center">
+                <div class="section-label" style="justify-content: center">
+                    How we work
+                </div>
+                <h2>
+                    Our <em>proven</em>
+                    engagement process
+                </h2>
+            </div>
+            <div class="process-track">
+                <div class="process-step sr sr-d1">
+                    <div class="process-num">01</div>
+                    <div class="process-title">Discovery</div>
+                    <p class="process-desc">
+                        Deep-dive into your current back-office operations, pain
+                        points, and business goals.
+                    </p>
+                </div>
+                <div class="process-step sr sr-d2">
+                    <div class="process-num">02</div>
+                    <div class="process-title">Strategy</div>
+                    <p class="process-desc">
+                        Tailored solution roadmap aligned with your growth
+                        trajectory and budget.
+                    </p>
+                </div>
+                <div class="process-step sr sr-d3">
+                    <div class="process-num">03</div>
+                    <div class="process-title">Onboarding</div>
+                    <p class="process-desc">
+                        Seamless transition with dedicated account management
+                        and minimal disruption.
+                    </p>
+                </div>
+                <div class="process-step sr sr-d4">
+                    <div class="process-num">04</div>
+                    <div class="process-title">Execution</div>
+                    <p class="process-desc">
+                        Expert teams take over day-to-day operations backed by
+                        real-time reporting.
+                    </p>
+                </div>
+                <div class="process-step sr sr-d5">
+                    <div class="process-num">05</div>
+                    <div class="process-title">Optimise</div>
+                    <p class="process-desc">
+                        Continuous improvement cycles keep your back-office
+                        ahead of your business needs.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- INDUSTRIES -->
+        <section id="industries">
+            <div class="sr">
+                <div class="section-label">Who we serve</div>
+                <h2>Built for every <em>industry</em></h2>
+            </div>
+            <div class="industries-grid">
+                <div class="industry-card sr sr-d1">
+                    <span class="industry-icon">🏭</span>
+                    <div class="industry-name">Manufacturing</div>
+                    <p class="industry-desc">
+                        SCM, logistics, and procurement support for complex
+                        production environments.
+                    </p>
+                </div>
+                <div class="industry-card sr sr-d2">
+                    <span class="industry-icon">🛒</span>
+                    <div class="industry-name">Retail &amp;E-commerce</div>
+                    <p class="industry-desc">
+                        Inventory management, order processing, and last-mile
+                        delivery coordination.
+                    </p>
+                </div>
+                <div class="industry-card sr sr-d3">
+                    <span class="industry-icon">🏥</span>
+                    <div class="industry-name">Healthcare</div>
+                    <p class="industry-desc">
+                        Billing, compliance management, and back-office
+                        outsourcing for healthcare providers.
+                    </p>
+                </div>
+                <div class="industry-card sr sr-d4">
+                    <span class="industry-icon">💼</span>
+                    <div class="industry-name">Financial Services</div>
+                    <p class="industry-desc">
+                        Accounting, reporting, and regulatory compliance for
+                        financial institutions.
+                    </p>
+                </div>
+                <div class="industry-card sr sr-d5">
+                    <span class="industry-icon">🚚</span>
+                    <div class="industry-name">Logistics &amp;Transport</div>
+                    <p class="industry-desc">
+                        End-to-end fleet management, route optimisation, and
+                        warehouse operations.
+                    </p>
+                </div>
+                <div class="industry-card sr sr-d6">
+                    <span class="industry-icon">🏗️</span>
+                    <div class="industry-name">Real Estate</div>
+                    <p class="industry-desc">
+                        Property accounting, vendor management, and cloud
+                        document systems.
+                    </p>
+                </div>
+                <div class="industry-card sr sr-d1">
+                    <span class="industry-icon">⚙️</span>
+                    <div class="industry-name">Engineering &amp;IT</div>
+                    <p class="industry-desc">
+                        Cloud infrastructure, outsourced support, and
+                        operational consulting.
+                    </p>
+                </div>
+                <div class="industry-card sr sr-d2">
+                    <span class="industry-icon">🎓</span>
+                    <div class="industry-name">Education</div>
+                    <p class="industry-desc">
+                        Administrative outsourcing, payroll, and digital
+                        transformation advisory.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- TESTIMONIALS -->
+        <section id="testimonials" style="background: var(--surface)">
+            <div class="sr" style="text-align: center">
+                <div class="section-label" style="justify-content: center">
+                    Client voices
+                </div>
+                <h2>Trusted by businesses <em>across India</em></h2>
+            </div>
+            <div class="testi-grid">
+                <div class="testi-card sr sr-d1">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-quote">
+                        Renviko transformed our entire back-office operations
+                        within three months. The SCM visibility we now have is
+                        unmatched — we've cut procurement costs by nearly 22%.
+                    </p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">DA</div>
+                        <div>
+                            <div class="testi-name">David Anderson</div>
+                            <div class="testi-role">
+                                COO, Anderson Industrial Solutions
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testi-card sr sr-d2">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-quote">
+                        Their cloud migration team was exceptional. Zero
+                        downtime, fully compliant, and the support structure
+                        they set up has been running flawlessly for over a year
+                        now.
+                    </p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">SP</div>
+                        <div>
+                            <div class="testi-name">Sunita Patel</div>
+                            <div class="testi-role">CTO, NexGen Retail</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testi-card sr sr-d3">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-quote">
+                        We handed over our entire accounts and finance function
+                        to Renviko. The accuracy, turnaround time, and audit
+                        readiness are things we couldn't achieve in-house
+                        before.
+                    </p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">AV</div>
+                        <div>
+                            <div class="testi-name">Arjun Varma</div>
+                            <div class="testi-role">MD, Horizon Healthcare</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- WHY -->
+        <section id="about" class="why-section">
+            <div class="why-grid">
+                <div class="sr">
+                    <div class="section-label">Why Renviko</div>
+                    <h2>Where precision meets <em>partnership</em></h2>
+                    <p class="why-statement">
+                        "We don't just manage your back office — we treat it
+                        like it's <em>our own.</em>
+                        "
+                    </p>
+                    <p
+                        style="
+                            color: var(--muted);
+                            font-size: 0.9rem;
+                            line-height: 1.8;
+                        "
+                    >
+                        Built for businesses that demand reliability. We combine
+                        deep domain expertise with technology to deliver
+                        back-office services that scale with you — from startup
+                        to enterprise.
+                    </p>
+                    <br />
+                    <a
+                        href="#contact"
+                        class="btn-primary"
+                        style="margin-top: 1rem"
+                        >Work with us →</a
+                    >
+                </div>
+                <div class="why-right sr sr-d2">
+                    <div class="pillar">
+                        <div class="pillar-glyph">⎔</div>
+                        <div class="pillar-title">Single-window access</div>
+                        <p class="pillar-desc">
+                            One team covering every back-office vertical. No
+                            juggling multiple vendors.
+                        </p>
+                        <div class="pillar-bar"></div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-glyph">⚡</div>
+                        <div class="pillar-title">Technology-first</div>
+                        <p class="pillar-desc">
+                            Cloud-native tools and automation delivering speed,
+                            accuracy, and visibility.
+                        </p>
+                        <div class="pillar-bar"></div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-glyph">◈</div>
+                        <div class="pillar-title">Scalable models</div>
+                        <p class="pillar-desc">
+                            Engagement models that grow with you — project,
+                            retainer, or embedded.
+                        </p>
+                        <div class="pillar-bar"></div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-glyph">✦</div>
+                        <div class="pillar-title">Compliance-ready</div>
+                        <p class="pillar-desc">
+                            Aligned with Indian regulatory standards. Always
+                            audit-ready.
+                        </p>
+                        <div class="pillar-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- TEAM -->
+        <section id="team">
+            <div class="sr" style="text-align: center">
+                <div class="section-label" style="justify-content: center">
+                    Our leadership
+                </div>
+                <h2>The team behind <em>Renviko</em></h2>
+            </div>
+            <div class="team-grid">
+                <div class="team-card sr sr-d1">
+                    <div class="team-avatar">FS</div>
+                    <div class="team-name">F Sharif</div>
+                    <div class="team-role">CEO</div>
+                    <p class="team-bio">
+                        10+ years in back-office operations and digital
+                        transformation over 200+ companies.
+                    </p>
+                </div>
+                <div class="team-card sr sr-d2">
+                    <div class="team-avatar">S</div>
+                    <div class="team-name">Shanmukh Sai Krishna</div>
+                    <div class="team-role">Head of Cloud</div>
+                    <p class="team-bio">
+                        AWS &amp;Azure certified architect with expertise in
+                        enterprise cloud migrations and managed services.
+                    </p>
+                </div>
+                <div class="team-card sr sr-d4">
+                    <div class="team-avatar">R</div>
+                    <div class="team-name">Rehman</div>
+                    <div class="team-role">Head of Finance</div>
+                    <p class="team-bio">
+                        MBA in Finance with 6 years managing accounts, audits,
+                        accounting, reporting, FP&A and compilance for
+                        mid-to-large enterprises.
+                    </p>
+                </div>
+                <div class="team-card sr sr-d3">
+                    <div class="team-avatar">E</div>
+                    <div class="team-name">Eswar Reddy</div>
+                    <div class="team-role">Head of SCM &amp;Logistics</div>
+                    <p class="team-bio">
+                        Supply chain specialist with experience spanning
+                        manufacturing, retail, and e-commerce.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ -->
+        <section id="faq" class="faq-section">
+            <div class="sr">
+                <div class="section-label">FAQ</div>
+                <h2>
+                    Questions we <em>always</em>
+                    get asked
+                </h2>
+            </div>
+            <div class="faq-grid">
+                <div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            What size of businesses do you work with?
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-a">
+                            We work with startups, SMEs, and large enterprises
+                            across India. Our engagement models are flexible
+                            enough to fit any scale.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            How long does onboarding typically take?
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-a">
+                            For standard engagements, onboarding takes 2–4
+                            weeks. Complex multi-service setups may take 6–8
+                            weeks. We prioritise zero disruption to your
+                            existing workflows.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Do you offer customised pricing?
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-a">
+                            Yes. Every proposal is customised based on your
+                            service requirements, volume, and preferred
+                            engagement type — project, retainer, or embedded
+                            team.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Which cloud platforms do you support?
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-a">
+                            We support AWS, Microsoft Azure, and Google Cloud
+                            Platform. Our architects are certified across all
+                            three and can design multi-cloud or hybrid solutions
+                            as needed.
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Is my data secure with Renviko?
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-a">
+                            Absolutely. We follow strict data handling
+                            protocols, NDAs are signed at engagement
+                            commencement, and all cloud services comply with ISO
+                            27001 standards.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Can I start with one service and expand?
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-a">
+                            Yes — and many clients do exactly this. You can
+                            start with accounts outsourcing and expand into
+                            logistics and SCM as the relationship grows.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            Do you handle GST and Indian compliance?
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-a">
+                            Yes. Our finance team is well-versed in GST, TDS,
+                            ROC filings, and all Indian regulatory requirements.
+                            Always audit-ready.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            What reporting do clients get?
+                            <span class="faq-icon">+</span>
+                        </div>
+                        <div class="faq-a">
+                            All clients get access to a dedicated dashboard with
+                            real-time reporting. Weekly summaries, monthly
+                            reviews, and quarterly business reviews are included
+                            in every engagement.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CTA BAND -->
+        <div class="cta-band">
+            <div class="sr">
+                <div class="section-label" style="justify-content: center">
+                    Ready to begin?
+                </div>
+                <h2>
+                    Let's build your <em>ideal</em>
+                    back office
+                </h2>
+                <p>
+                    Join 200+ businesses across India that trust Renviko to run
+                    their back-office operations with precision, speed, and
+                    care.
+                </p>
+                <div class="cta-band-actions">
+                    <a href="#contact" class="btn-primary"
+                        >Schedule a free consultation →</a
+                    >
+                    <a href="#services" class="btn-outline"
+                        >View all services</a
+                    >
+                </div>
+            </div>
+        </div>
+        <!-- CONTACT -->
+        <section id="contact">
+            <div class="sr" style="margin-bottom: 4rem">
+                <div class="section-label">Get in touch</div>
+                <h2>
+                    Let's talk about <em>your</em>
+                    back office
+                </h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-form sr sr-d1">
+                    <div class="form-row">
+                        <div class="field-group">
+                            <label for="cf-name">Your name</label>
+                            <input
+                                id="cf-name"
+                                name="name"
+                                type="text"
+                                placeholder="Full name"
+                                required
+                            />
+                        </div>
+                        <div class="field-group">
+                            <label for="cf-company">Company</label>
+                            <input
+                                id="cf-company"
+                                name="company"
+                                type="text"
+                                placeholder="Company name"
+                            />
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label for="cf-email">Email</label>
+                        <input
+                            id="cf-email"
+                            name="email"
+                            type="email"
+                            placeholder="your@email.com"
+                            required
+                        />
+                    </div>
+                    <div class="field-group">
+                        <label for="cf-phone">Phone</label>
+                        <input
+                            id="cf-phone"
+                            name="phone"
+                            type="tel"
+                            placeholder="+91 00000 00000"
+                        />
+                    </div>
+                    <div class="field-group">
+                        <label for="cf-service">Service of interest</label>
+                        <select id="cf-service" name="service">
+                            <option value="" disabled selected>
+                                Select a service
+                            </option>
+                            <option>Cloud Solutions</option>
+                            <option>Outsourcing</option>
+                            <option>Consulting</option>
+                            <option>Logistics</option>
+                            <option>Supply Chain Management</option>
+                            <option>Accounts &amp;Finance</option>
+                            <option>Multiple / Not sure</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label for="cf-message">Message</label>
+                        <textarea
+                            id="cf-message"
+                            name="message"
+                            rows="4"
+                            placeholder="Tell us about your requirements..."
+                        ></textarea>
+                    </div>
+                    <button
+                        class="btn-primary"
+                        style="width: fit-content; cursor: none"
+                        id="sendBtn"
+                        onclick="submitForm(event)"
+                    >
+                        Send message →
+                    </button>
+                    <p
+                        id="form-status"
+                        style="
+                            font-size: 0.82rem;
+                            margin-top: 0.5rem;
+                            display: none;
+                        "
+                    ></p>
+                </div>
+                <div class="contact-info sr sr-d3">
+                    <div class="cinfo-item">
+                        <div class="cinfo-icon">◈</div>
+                        <div>
+                            <div class="cinfo-label">Company</div>
+                            <div class="cinfo-value">
+                                Renviko Technologies Pvt Ltd
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cinfo-item">
+                        <div class="cinfo-icon">⌖</div>
+                        <div>
+                            <div class="cinfo-label">Headquarters</div>
+                            <div class="cinfo-value">India</div>
+                        </div>
+                    </div>
+                    <div class="cinfo-item">
+                        <div class="cinfo-icon">⊞</div>
+                        <div>
+                            <div class="cinfo-label">Specialisation</div>
+                            <div class="cinfo-value">
+                                End-to-End Back-Office Solutions
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cinfo-item">
+                        <div class="cinfo-icon">◎</div>
+                        <div>
+                            <div class="cinfo-label">Engagement Types</div>
+                            <div class="cinfo-value">
+                                Project · Retainer · Embedded
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cinfo-item">
+                        <div class="cinfo-icon">✉</div>
+                        <div>
+                            <div class="cinfo-label">Email</div>
+                            <div class="cinfo-value">info@renvikotech.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-top">
+                <div>
+                    <div class="footer-brand-logo">
+                        Ren<span>viko</span>
+                        Technologies
+                    </div>
+                    <p class="footer-tagline">
+                        Your trusted partner for end-to-end back-office
+                        solutions across India and beyond.
+                    </p>
+                </div>
+                <div>
+                    <div class="footer-col-title">Services</div>
+                    <ul class="footer-links-list">
+                        <li>
+                            <a
+                                href="#"
+                                onclick="openModal('cloud');return false;"
+                                >Cloud Solutions</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                onclick="openModal('outsourcing');return false;"
+                                >Outsourcing</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                onclick="openModal('consulting');return false;"
+                                >Consulting</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                onclick="openModal('logistics');return false;"
+                                >Logistics</a
+                            >
+                        </li>
+                        <li>
+                            <a href="#" onclick="openModal('scm');return false;"
+                                >SCM</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                onclick="openModal('accounts');return false;"
+                                >Accounts &amp;Finance</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Company</div>
+                    <ul class="footer-links-list">
+                        <li>
+                            <a href="#about">About Us</a>
+                        </li>
+                        <li>
+                            <a href="#team">Our Team</a>
+                        </li>
+                        <li>
+                            <a href="#industries">Industries</a>
+                        </li>
+                        <li>
+                            <a href="#testimonials">Testimonials</a>
+                        </li>
+                        <li>
+                            <a href="#faq">FAQ</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Connect</div>
+                    <ul class="footer-links-list">
+                        <li>
+                            <a href="#contact">Contact Us</a>
+                        </li>
+                        <li>
+                            <a href="#">LinkedIn</a>
+                        </li>
+                        <li>
+                            <a href="#">Twitter</a>
+                        </li>
+                        <li>
+                            <a href="mailto:info@renvikotech.com"
+                                >info@renvikotech.com</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copy">
+                    © 2025 Renviko Technologies Pvt Ltd. All rights reserved.
+                </div>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+            <span
+                style="
+                    font-size: 0;
+                    color: transparent;
+                    user-select: none;
+                    pointer-events: none;
+                    position: absolute;
+                    opacity: 0;
+                "
+                aria-hidden="true"
+                >Gayathri</span
+            >
+        </footer>
+        <!-- MODAL -->
+        <div
+            class="modal-overlay"
+            id="modalOverlay"
+            onclick="closeModalOutside(event)"
+        >
+            <div class="modal" id="modalBox">
+                <div class="modal-header">
+                    <div class="modal-index" id="modalIndex"></div>
+                    <div class="modal-title" id="modalTitle"></div>
+                    <button class="modal-close" onclick="closeModal()">
+                        ✕
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-intro" id="modalIntro"></p>
+                    <div class="modal-features-title">What's included</div>
+                    <div class="modal-features" id="modalFeatures"></div>
+                    <div class="modal-cta">
+                        <a
+                            href="#contact"
+                            class="btn-primary"
+                            onclick="closeModal()"
+                            >Get a free consultation →</a
+                        >
+                        <a
+                            href="#contact"
+                            class="btn-ghost"
+                            onclick="closeModal()"
+                            >Contact us</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // ── CURSOR ──
+            const dot = document.querySelector(".cursor-dot"),
+                ring = document.querySelector(".cursor-ring");
+            let mx = 0,
+                my = 0,
+                rx = 0,
+                ry = 0;
+            document.addEventListener("mousemove", (e) => {
+                mx = e.clientX;
+                my = e.clientY;
+                dot.style.left = mx + "px";
+                dot.style.top = my + "px";
+            });
+            (function loop() {
+                rx += (mx - rx) * 0.12;
+                ry += (my - ry) * 0.12;
+                ring.style.left = rx + "px";
+                ring.style.top = ry + "px";
+                requestAnimationFrame(loop);
+            })();
+
+            // ── SCROLL REVEAL ── (uses 'visible' not 'v')
+            const revealObs = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((e) => {
+                        if (e.isIntersecting) {
+                            e.target.classList.add("visible");
+                            revealObs.unobserve(e.target);
+                        }
+                    });
+                },
+                {
+                    threshold: 0.1,
+                    rootMargin: "0px 0px -40px 0px",
+                }
+            );
+            document
+                .querySelectorAll(".sr")
+                .forEach((el) => revealObs.observe(el));
+
+            // ── COUNTER ──
+            const cntObs = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((e) => {
+                        if (!e.isIntersecting) return;
+                        const el = e.target,
+                            target = +el.dataset.target,
+                            step = target / (1600 / 16);
+                        let cur = 0;
+                        const t = setInterval(() => {
+                            cur = Math.min(cur + step, target);
+                            el.textContent = Math.floor(cur);
+                            if (cur >= target) clearInterval(t);
+                        }, 16);
+                        cntObs.unobserve(el);
+                    });
+                },
+                {
+                    threshold: 0.5,
+                }
+            );
+            document
+                .querySelectorAll(".count")
+                .forEach((c) => cntObs.observe(c));
+
+            // ── PARALLAX ──
+            document.addEventListener("mousemove", (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20,
+                    y = (e.clientY / window.innerHeight - 0.5) * 20;
+                document.querySelector(".orb1").style.transform = `translate(${
+                    x * 0.5
+                }px,${y * 0.5}px)`;
+                document.querySelector(".orb2").style.transform = `translate(${
+                    -x * 0.3
+                }px,${-y * 0.3}px)`;
+            });
+
+            // ── FAQ ──
+            function toggleFaq(el) {
+                const item = el.parentElement,
+                    wasOpen = item.classList.contains("open");
+                document
+                    .querySelectorAll(".faq-item")
+                    .forEach((i) => i.classList.remove("open"));
+                if (!wasOpen) item.classList.add("open");
+            }
+
+            // ── FORM ──
+            const FORMSPREE = "https://formspree.io/f/mgopzokz";
+            async function submitForm(e) {
+                e.preventDefault();
+                const btn = document.getElementById("sendBtn"),
+                    status = document.getElementById("form-status");
+                const data = {
+                    name: document.getElementById("cf-name").value,
+                    company: document.getElementById("cf-company").value,
+                    email: document.getElementById("cf-email").value,
+                    phone: document.getElementById("cf-phone").value,
+                    service: document.getElementById("cf-service").value,
+                    message: document.getElementById("cf-message").value,
+                };
+                if (!data.name || !data.email) {
+                    status.textContent = "Please fill in your name and email.";
+                    status.style.color = "#E24B4A";
+                    status.style.display = "block";
+                    return;
+                }
+                btn.textContent = "Sending…";
+                btn.style.pointerEvents = "none";
+                btn.style.opacity = "0.7";
+                try {
+                    const res = await fetch(FORMSPREE, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    });
+                    if (res.ok) {
+                        btn.textContent = "Message sent ✓";
+                        btn.style.background = "#1A8C5E";
+                        btn.style.opacity = "1";
+                        status.textContent =
+                            "Thank you! We'll be in touch within 24 hours.";
+                        status.style.color = "#3DDC97";
+                        status.style.display = "block";
+                        [
+                            "cf-name",
+                            "cf-company",
+                            "cf-email",
+                            "cf-phone",
+                            "cf-service",
+                            "cf-message",
+                        ].forEach((id) => {
+                            const el = document.getElementById(id);
+                            if (el) el.value = "";
+                        });
+                    } else {
+                        throw new Error();
+                    }
+                } catch {
+                    btn.textContent = "Send message →";
+                    btn.style.pointerEvents = "auto";
+                    btn.style.opacity = "1";
+                    status.textContent =
+                        "Something went wrong. Please try again or email us directly.";
+                    status.style.color = "#E24B4A";
+                    status.style.display = "block";
+                }
+            }
+
+            // ── MODALS ──
+            const services = {
+                cloud: {
+                    index: "Service Z1",
+                    title: "Cloud Solutions",
+                    intro: "We design, migrate, and manage cloud infrastructure tailored to your business. Whether you're moving from on-premise to the cloud, scaling an existing setup, or need ongoing managed services — our certified architects handle it end to end.",
+                    features: [
+                        {
+                            t: "Cloud Migration",
+                            d: "Seamless lift-and-shift or re-architected migrations to AWS, Azure, or GCP with zero downtime.",
+                        },
+                        {
+                            t: "Managed Services",
+                            d: "24/7 monitoring, maintenance, and support for your entire cloud environment.",
+                        },
+                        {
+                            t: "Cost Optimisation",
+                            d: "Regular audits and rightsizing to reduce your cloud spend without sacrificing performance.",
+                        },
+                        {
+                            t: "Security & Compliance",
+                            d: "ISO 27001-aligned cloud security frameworks and compliance management.",
+                        },
+                        {
+                            t: "Disaster Recovery",
+                            d: "Robust backup and disaster recovery solutions to ensure business continuity.",
+                        },
+                        {
+                            t: "DevOps & Automation",
+                            d: "CI/CD pipelines, infrastructure-as-code, and automation to accelerate delivery.",
+                        },
+                    ],
+                },
+                outsourcing: {
+                    index: "Service A2",
+                    title: "Outsourcing",
+                    intro: "Hand over your non-core business functions to Renviko's skilled teams and refocus your energy on growth. From customer support to data processing and HR administration — we deliver with accuracy, speed, and full accountability.",
+                    features: [
+                        {
+                            t: "Data Entry & Processing",
+                            d: "High-volume, accurate data management with turnaround SLAs and built-in quality checks.",
+                        },
+                        {
+                            t: "Customer Support",
+                            d: "Trained support agents for voice, email, and chat — available in multiple shifts.",
+                        },
+                        {
+                            t: "HR & Payroll Admin",
+                            d: "Complete HR back-office including payroll processing, attendance, and compliance.",
+                        },
+                        {
+                            t: "Document Management",
+                            d: "Digitisation, indexing, archival, and retrieval of business documents.",
+                        },
+                        {
+                            t: "Back-Office Operations",
+                            d: "Invoice processing, vendor coordination, and general administrative tasks.",
+                        },
+                        {
+                            t: "Quality Assurance",
+                            d: "Built-in QA processes at every stage to ensure accuracy and client satisfaction.",
+                        },
+                    ],
+                },
+                consulting: {
+                    index: "Service M3",
+                    title: "Consulting",
+                    intro: "Our consultants bring deep operational expertise to help your business run smarter. From process audits to digital transformation strategies — we identify gaps, design solutions, and help you execute them with precision.",
+                    features: [
+                        {
+                            t: "Process Audit",
+                            d: "Comprehensive review of your existing back-office workflows to identify inefficiencies.",
+                        },
+                        {
+                            t: "Digital Transformation",
+                            d: "Strategic roadmaps for moving from legacy systems to modern, scalable platforms.",
+                        },
+                        {
+                            t: "ERP Implementation",
+                            d: "Advisory and support for SAP, Oracle, and Microsoft Dynamics implementations.",
+                        },
+                        {
+                            t: "Change Management",
+                            d: "Structured change management to ensure smooth adoption of new processes and tools.",
+                        },
+                        {
+                            t: "Performance Benchmarking",
+                            d: "Industry benchmarks to measure and improve your operational KPIs.",
+                        },
+                        {
+                            t: "Technology Advisory",
+                            d: "Vendor-neutral guidance on selecting the right technology stack for your needs.",
+                        },
+                    ],
+                },
+                logistics: {
+                    index: "Service E4",
+                    title: "Logistics",
+                    intro: "Renviko manages the complexity of logistics so your goods move efficiently, on time, and at optimal cost. We coordinate with carriers, warehouses, and last-mile partners to give you complete end-to-end visibility.",
+                    features: [
+                        {
+                            t: "Freight Coordination",
+                            d: "Multi-modal freight management including road, rail, air, and sea shipments.",
+                        },
+                        {
+                            t: "Warehouse Management",
+                            d: "Inventory management, slotting optimisation, and WMS integration.",
+                        },
+                        {
+                            t: "Last-Mile Delivery",
+                            d: "Coordination with delivery partners to ensure timely, trackable last-mile execution.",
+                        },
+                        {
+                            t: "Shipment Tracking",
+                            d: "Real-time shipment visibility with automated alerts and exception management.",
+                        },
+                        {
+                            t: "Customs & Compliance",
+                            d: "Import/export documentation, customs clearance, and regulatory compliance.",
+                        },
+                        {
+                            t: "Reverse Logistics",
+                            d: "Returns management, refurbishment coordination, and disposal workflows.",
+                        },
+                    ],
+                },
+                scm: {
+                    index: "Service E5",
+                    title: "Supply Chain Management",
+                    intro: "We bring structure, visibility, and intelligence to your supply chain. From supplier onboarding to demand planning and vendor performance management — Renviko's SCM team reduces costs and strengthens your supply chain resilience.",
+                    features: [
+                        {
+                            t: "Supplier Management",
+                            d: "Vendor onboarding, evaluation, and performance tracking with scorecards.",
+                        },
+                        {
+                            t: "Demand Planning",
+                            d: "Data-driven demand forecasting to reduce stockouts and overstock situations.",
+                        },
+                        {
+                            t: "Procurement Support",
+                            d: "Purchase order management, negotiation support, and spend analytics.",
+                        },
+                        {
+                            t: "Inventory Optimisation",
+                            d: "Safety stock calculations, reorder point management, and ABC analysis.",
+                        },
+                        {
+                            t: "Supply Chain Analytics",
+                            d: "Dashboards and reporting to monitor KPIs across the entire supply chain.",
+                        },
+                        {
+                            t: "Risk Management",
+                            d: "Identification and mitigation of supply chain risks, disruptions, and dependencies.",
+                        },
+                    ],
+                },
+                accounts: {
+                    index: "Service R6",
+                    title: "Accounts & Finance",
+                    intro: "Our qualified finance professionals manage your accounts with the accuracy, timeliness, and compliance that your business demands. From day-to-day bookkeeping to complex financial reporting and audit preparation.",
+                    features: [
+                        {
+                            t: "Bookkeeping",
+                            d: "Daily transaction recording, bank reconciliation, and ledger maintenance.",
+                        },
+                        {
+                            t: "Payroll Processing",
+                            d: "Accurate payroll computation including PF, ESI, TDS, and statutory filings.",
+                        },
+                        {
+                            t: "GST & Compliance",
+                            d: "Monthly GST filing, TDS returns, and all statutory compliance management.",
+                        },
+                        {
+                            t: "Financial Reporting",
+                            d: "P&L statements, balance sheets, cash flow reports, and MIS dashboards.",
+                        },
+                        {
+                            t: "Accounts Payable/Receivable",
+                            d: "Invoice management, payment processing, and collections follow-up.",
+                        },
+                        {
+                            t: "Audit Preparation",
+                            d: "Comprehensive audit readiness support including documentation and reconciliation.",
+                        },
+                    ],
+                },
+            };
+            function openModal(key) {
+                const s = services[key];
+                document.getElementById("modalIndex").textContent = s.index;
+                document.getElementById("modalTitle").textContent = s.title;
+                document.getElementById("modalIntro").textContent = s.intro;
+                document.getElementById("modalFeatures").innerHTML = s.features
+                    .map(
+                        (f) =>
+                            `<div class="modal-feature"><div class="modal-feature-title">${f.t}</div><div class="modal-feature-desc">${f.d}</div></div>`
+                    )
+                    .join("");
+                document.getElementById("modalOverlay").classList.add("open");
+                document.body.style.overflow = "hidden";
+                document.getElementById("modalBox").scrollTop = 0;
+            }
+            function closeModal() {
+                document
+                    .getElementById("modalOverlay")
+                    .classList.remove("open");
+                document.body.style.overflow = "";
+            }
+            function closeModalOutside(e) {
+                if (e.target === document.getElementById("modalOverlay"))
+                    closeModal();
+            }
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") closeModal();
+            });
+
+            // ── EASTER EGG ──
+            console.log(
+                "%c Gayathri ",
+                "background:#3DDC97;color:#0B0F0E;font-size:18px;font-weight:bold;padding:6px 18px;border-radius:4px;"
+            );
+            console.log(
+                "%c Made with ♥ by Renviko ",
+                "color:#3DDC97;font-size:11px;"
+            );
+        </script>
+    </body>
+</html>
